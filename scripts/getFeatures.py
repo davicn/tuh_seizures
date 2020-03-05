@@ -23,14 +23,18 @@ w = np.unique(w.iloc[:,0].to_numpy())
 n = np.unique(n.iloc[:,0].to_numpy())
 
 # eegs = []
+w_eegs_var = []
+w_eegs_eng = []
 w_ecgs_var = []
-w_emgs_var = []
 w_ecgs_eng = []
+w_emgs_var = []
 w_emgs_eng = []
 
+n_eegs_eng = []
+n_eegs_var = []
+n_ecgs_eng = []
 n_ecgs_var = []
 n_emgs_var = []
-n_ecgs_eng = []
 n_emgs_eng = []
 
 for i in range(len(w)):
@@ -38,28 +42,37 @@ for i in range(len(w)):
         HOME + '/Documentos/tuh_edf/' + w[i].replace('tse', 'edf'), preload=False, verbose=False)
 
     d = raw.to_data_frame().T
-    # eeg = d.loc[use, :].to_numpy()
-    ecg = d.loc['EEG EKG1-REF', :].to_numpy()
-    emg = d.loc['EMG-REF', :].to_numpy()
+    eeg = d.loc[use, :].to_numpy()
+#     ecg = d.loc['EEG EKG1-REF', :].to_numpy()
+#     emg = d.loc['EMG-REF', :].to_numpy()
 
-    # eeg_var = gf.variancia(eeg, t, fs, True)
-    ecg_var = gf.variancia(ecg, t, fs, False)
-    emg_var = gf.variancia(ecg, t, fs, False)
-    ecg_eng = gf.energia(ecg, t, fs, False)
-    emg_eng = gf.energia(ecg, t, fs, False)
+    eeg_var = gf.variancia(eeg, t, fs, True)
+    eeg_eng = gf.energia(eeg, t, fs, True)
 
-    # print(eeg_var)
-    w_ecgs_var.append(ecg_var)
-    w_emgs_var.append(emg_var)
-    w_ecgs_eng.append(ecg_eng)
-    w_emgs_eng.append(emg_eng)
+#     emg_var = gf.variancia(emg, t, fs, False)
+#     emg_eng = gf.energia(emg, t, fs, False)
+#     ecg_var = gf.variancia(ecg, t, fs, False)
+#     ecg_eng = gf.energia(ecg, t, fs, False)
 
-    print(w[i])
+    print(eeg_var.shape)
+    print(eeg_eng.shape)
 
-np.save("w_ecg_var.npy",w_ecgs_var)
-np.save("w_emg_var.npy",w_emgs_var)
-np.save("w_ecg_eng.npy",w_ecgs_eng)
-np.save("w_emg_eng.npy",w_emgs_eng)
+    w_eegs_var.append(eeg_var)
+    w_eegs_eng.append(eeg_eng)
+
+
+#     w_emgs_var.append(emg_var.cpu().numpy())
+#     w_emgs_eng.append(emg_eng.cpu().numpy())
+#     w_ecgs_var.append(ecg_var.cpu().numpy())
+#     w_ecgs_eng.append(ecg_eng.cpu().numpy())
+
+#     print(w[i])
+np.save("w_eeg_var.npy",w_eegs_var)
+np.save("w_eeg_eng.npy",w_eegs_eng)
+# np.save("w_emg_var.npy",w_emgs_var)
+# np.save("w_emg_eng.npy",w_emgs_eng)
+# np.save("w_ecg_var.npy",w_ecgs_var)
+# np.save("w_ecg_eng.npy",w_ecgs_eng)
 
 
 for i in range(len(n)):
@@ -67,28 +80,35 @@ for i in range(len(n)):
         HOME + '/Documentos/tuh_edf/' + n[i].replace('tse', 'edf'), preload=False, verbose=False)
 
     d = raw.to_data_frame().T
-    # eeg = d.loc[use, :].to_numpy()
-    ecg = d.loc['EEG EKG1-REF', :].to_numpy()
-    emg = d.loc['EMG-REF', :].to_numpy()
+    eeg = d.loc[use, :].to_numpy()
+#     ecg = d.loc['EEG EKG1-REF', :].to_numpy()
+#     emg = d.loc['EMG-REF', :].to_numpy()
+    eeg_var = gf.variancia(eeg, t, fs, True)
+    eeg_eng = gf.energia(eeg, t, fs, True)
+#     # eeg_var = gf.variancia(eeg, t, fs, True)
+#     emg_eng = gf.energia(emg, t, fs, False)
+#     emg_var = gf.variancia(emg, t, fs, False)
+#     ecg_var = gf.variancia(ecg, t, fs, False)
+#     ecg_eng = gf.energia(ecg, t, fs, False)
+    print(eeg_var.shape)
+    print(eeg_eng.shape)
 
-    # eeg_var = gf.variancia(eeg, t, fs, True)
-    ecg_var = gf.variancia(ecg, t, fs, False)
-    emg_var = gf.variancia(ecg, t, fs, False)
-    ecg_eng = gf.energia(ecg, t, fs, False)
-    emg_eng = gf.energia(ecg, t, fs, False)
+    n_eegs_var.append(eeg_var)
+    n_eegs_eng.append(eeg_eng)
 
-    # print(eeg_var)
-    n_ecgs_var.append(ecg_var)
-    n_emgs_var.append(emg_var)
-    n_ecgs_eng.append(ecg_eng)
-    n_emgs_eng.append(emg_eng)
+#     # print(eeg_var)
+#     n_emgs_var.append(emg_var.cpu().numpy())
+#     n_emgs_eng.append(emg_eng.cpu().numpy())
+#     n_ecgs_var.append(ecg_var.cpu().numpy())
+#     n_ecgs_eng.append(ecg_eng.cpu().numpy())
 
-    print(n[i])
-
-np.save("n_ecg_var.npy",n_ecgs_var)
-np.save("n_emg_var.npy",n_emgs_var)
-np.save("n_ecg_eng.npy",n_ecgs_eng)
-np.save("n_emg_eng.npy",n_emgs_eng)
+#     print(n[i])
+np.save("n_eeg_var.npy",n_eegs_var)
+np.save("n_eeg_eng.npy",n_eegs_eng)
+# np.save("n_ecg_var.npy",n_ecgs_var)
+# np.save("n_emg_var.npy",n_emgs_var)
+# np.save("n_ecg_eng.npy",n_ecgs_eng)
+# np.save("n_emg_eng.npy",n_emgs_eng)
 
 
 # np.save('tamanhos2.npy',np.array(lens))
